@@ -51,10 +51,4 @@ function createPhotosandVids_WeeklyPractice(monthlyfolders = Array, weeklypracti
         }
 
     }
-
-    var days = monthlyfolders[month]
-    for (i = 0; i < days.length(); i++) {
-        var weeklypracticefolder = getFolders("WeeklyPractice")
-        var childFolder = getChildFolders("WeeklyPractice");
-    }
 }
