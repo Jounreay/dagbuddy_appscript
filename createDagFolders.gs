@@ -34,12 +34,11 @@ function createAttendanceFolder(monthlyfolders = Array, weeklypracticedays = Arr
 function createPhotosandVids_WeeklyPractice(monthlyfolders = Array, weeklypracticedays = Array, subfolders = Array) {
 
     var photosandvidsfolder = getFolders("Photos/Vids")
-    var monthkey = weeklypracticedays[0]
-    var month = [monthlyfolders[monthkey][0].split('-')[0, 1]];
-    
-    Logger.log(`Creating Photos/Vids directory ${month}`)
-    var basemonthfolder = createSubFolders(photosandvidsfolder, month)
-    Logger.log(`Created Photos/Vids directory ${month}`)
+    var thismonth = getCurrentMonth()
+
+    Logger.log(`Creating Photos/Vids directory ${thismonth}`)
+    var basemonthfolder = createSubFolders(photosandvidsfolder, thismonth)
+    Logger.log(`Created Photos/Vids directory ${thismonth}`)
     for (i = 0; i < weeklypracticedays.length(); i++)
         var alphamonth = weeklypracticedays[i]
     for (i = 0; i < monthlyfolders[alphamonth].length(); i++) {
@@ -51,4 +50,5 @@ function createPhotosandVids_WeeklyPractice(monthlyfolders = Array, weeklypracti
         }
 
     }
+
 }
