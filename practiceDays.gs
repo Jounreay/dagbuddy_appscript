@@ -1,3 +1,4 @@
+//this should be a class - calling GetAll should not be public.
 function GetAll(date=Date, scheduleddays=Array) {
 
     var daysoftheweek = {
