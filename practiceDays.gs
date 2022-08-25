@@ -1,4 +1,3 @@
-//this should be a class - calling GetAll should not be public.
 function GetAll(date=Date, scheduleddays=Array) {
 
     var daysoftheweek = {
@@ -38,13 +37,13 @@ function GetAll(date=Date, scheduleddays=Array) {
 
 
                 var yyyy = temp.getFullYear();
-                practicedates.push(yyyy + "-" + mm0 + "-" + dd0)
+                alldays.push(yyyy + "-" + mm0 + "-" + dd0)
 
             }
 
         }
-        weekdaysofthemonth[weekdaystring] = practicedates
-        alldays.push(weekdaysofthemonth)
+        //weekdaysofthemonth[weekdaystring] = practicedates
+        //alldays.push(weekdaysofthemonth)
         if (alldays.length == numberofdays) {
             break
         }

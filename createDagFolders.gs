@@ -8,13 +8,28 @@ function getFolders(name = String) {
 
 //Typing isnt enforced here because I cannot declare the type of object in appscript, apparently. 
 //Left is a DriveApp obj, right is an array
-function createSubFolders(topfolder, childfolders = Array) {
+function createSubFolders(topfolders=Array, childfolders = Array) {
     var createdfolders = [];
-    for (i = 0; i < childfolders.length(); i++) {
-        createdfolders.push(topfolder.createFolder(childfolders[i]));
-    }
+    Logger.log(topfolders.length)
+    if (!topfolders.length){
+      for (i = 0; i < childfolders.length; i++) {
+        Logger.log(`Creating folder: ${childfolders[i]} in directory ${topfolders}`)
+        var createdfolder = topfolders.createFolder(childfolders[i])
+        createdfolders.push(createdfolder);
+      }
+    } else {
+          for (i = 0; topfolders.length > i; i++){
+            for (k =0; childfolders.length > k; k++){
+                      Logger.log(`Creating folder: ${childfolders[k]} in directory ${topfolders[i]}`)
+                      var createdfolder = topfolders[i].createFolder(childfolders[k])
+                      createdfolders.push(createdfolder);
+            }
+
+          }
+      }
+    Logger.log("Done")
     return createdfolders
-}
+    }
 
 
 function createAttendanceFolder(monthlyfolders = Array, weeklypracticedays = Array) {
@@ -34,21 +49,15 @@ function createAttendanceFolder(monthlyfolders = Array, weeklypracticedays = Arr
 function createPhotosandVids_WeeklyPractice(monthlyfolders = Array, weeklypracticedays = Array, subfolders = Array) {
 
     var photosandvidsfolder = getFolders("Photos/Vids")
-    var thismonth = getCurrentMonth()
-
-    Logger.log(`Creating Photos/Vids directory ${thismonth}`)
-    var basemonthfolder = createSubFolders(photosandvidsfolder, thismonth)
-    Logger.log(`Created Photos/Vids directory ${thismonth}`)
-    for (i = 0; i < weeklypracticedays.length(); i++)
-        var alphamonth = weeklypracticedays[i]
-    for (i = 0; i < monthlyfolders[alphamonth].length(); i++) {
-        var daysubfolder = getFolders("Photos/Vids").getFoldersByName(basemonthfolder[0].getName()).next()
-        var createddayfolders = createSubFolders(daysubfolder, monthlyfolders[alphamonth])
-        for (i = 0; i < createddayfolders.length(); i++) {
-            var dailypracticefolder = getFolders("Photos/Vids").getFoldersByName(basemonthfolder[0].getName()).next().getFoldersByName(createddayfolders[i])
-            createSubFolders(dailypracticefolder, subfolders)
-        }
-
-    }
-
-}
+    var days = Object.values(weeklypracticedays)
+    const monthtocreate = []
+    var thismonth = getCurrentMonth();
+    monthtocreate.push(thismonth)
+    Logger.log(`Creating Photos/Vids directory ${monthtocreate[0]}`)
+    var basemonthfolder = createSubFolders(photosandvidsfolder, monthtocreate)
+    Logger.log(`Created Photos/Vids directory ${monthtocreate[0]}`)
+    Logger.log(`Creating folders for the following days in ${monthtocreate}: ${days}`)
+    var monthfolder = createSubFolders(basemonthfolder,monthlyfolders)
+    createSubFolders(monthfolder, subfolders)
+    
+     }
